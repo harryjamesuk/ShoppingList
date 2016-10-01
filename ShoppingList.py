@@ -50,6 +50,18 @@ def askToGetpos():
     print()
     printShoppingList(True)
 
+def askToPrintPos():
+    print("What is the position of the item you are looking for?")
+    item_to_print = input("> ")
+    if item_to_print[0].isdigit():
+        printpos(item_to_print)
+    else:
+        print("### ERROR ###")
+        print("Please specify the numerical position of the item you are looking for.")
+        askToPrintPos()
+    print()
+    printShoppingList(False)
+
 def selectMenuOption():
     print("What would you like to do?")
     # Print menu
@@ -69,7 +81,7 @@ def selectMenuOption():
         askToGetpos()
     elif active_menu_option == "printpos":
         # Printpos
-        print("Coming soon.")
+        askToPrintPos()
     else:
         # Unknown - Ask again
         print("Unknown menu option selected:", active_menu_option + ".", "Please try again: \n")
@@ -78,8 +90,13 @@ def selectMenuOption():
 
 def returnIndexFromUserInput(user_input):
     user_input = user_input.strip()
+    for i in range(len(user_input)-1):
+        if i == 0:
+            index = user_input[i]
+        else:
+            index += user_input[i]
     if user_input[0].isdigit():
-        index = int(user_input[0])-1 # Convert to int, remove additional characters, and remove 1 to get index.
+        index = int(user_input)-1 # Convert to int, remove additional characters, and remove 1 to get index.
         if index < 0:
             print("### ERROR ###")
             print("The number you have specified is not a valid position in the shopping list. The shopping list",
@@ -143,6 +160,17 @@ def getpos(item):
     elif isinstance(index, list):
         for i in index:
             print("- Found:", item, "at position:", i + 1)
+
+
+def printpos(item):
+    global shopping_list
+    index = returnIndexFromUserInput(item)
+    if isinstance(index, bool):
+        # We've hit an error!
+        print("Please try again:")
+        askToDelete()
+    elif isinstance(index, int):
+        print("The item at position:", index+1, "is:", shopping_list[index])
 
 # Startup
 name = input("What is your name? ")
