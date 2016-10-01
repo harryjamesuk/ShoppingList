@@ -16,6 +16,7 @@ def printShoppingList(show_positions):
         for item in shopping_list:
             numbered_shopping_list += "(" + str(i) + ") " + item + ". "
             i += 1
+        print(numbered_shopping_list)
     else:
         print(', '.join(shopping_list) + ".")
 
@@ -40,6 +41,15 @@ def askToDelete():
     print()
     printShoppingList(False)
 
+def askToGetpos():
+    print("What item are you looking for?")
+    item_to_find = input("> ")
+    print("Ok, we'll look for", item_to_find)
+    print("Searching...")
+    getpos(item_to_find)
+    print()
+    printShoppingList(True)
+
 def selectMenuOption():
     print("What would you like to do?")
     # Print menu
@@ -56,7 +66,7 @@ def selectMenuOption():
         askToDelete()
     elif active_menu_option == "getpos":
         # Getpos
-        print("Coming soon.")
+        askToGetpos()
     elif active_menu_option == "printpos":
         # Printpos
         print("Coming soon.")
@@ -121,6 +131,18 @@ def deleteItem(item):
     elif isinstance(index, list):
         for i in index:
             del shopping_list[i]
+
+
+def getpos(item):
+    global shopping_list
+    index = returnIndexFromUserInput(item)
+    if isinstance(index, bool):
+        # We've hit an error!
+        print("Please try again:")
+        getpos()
+    elif isinstance(index, list):
+        for i in index:
+            print("- Found:", item, "at position:", i + 1)
 
 # Startup
 name = input("What is your name? ")
