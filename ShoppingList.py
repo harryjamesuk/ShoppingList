@@ -166,11 +166,13 @@ def returnIndexFromUserInput(user_input):
         indexes = []
         current_index = 0
         for item in shopping_list:
-            if item == user_input:
+            if item.lower() == user_input.lower():
                 indexes.append(current_index)
             current_index+=1
         if len(indexes) == 0:
-            print("No indexes found for specified selection.")
+            #print("No indexes found for specified selection.")
+            #Let's be user friendly.
+            print("Sorry! We couldn't find: " + user_input + " in you shopping list :'(")
         return indexes
 
 
@@ -229,6 +231,13 @@ def getpos(item):
     index = returnIndexFromUserInput(item)
     if isinstance(index, bool):
         # We've hit an error!
+        print("Please try again:")
+        askToGetpos()
+        return False
+    elif isinstance(index, int):
+        # Error - Specify value, not int.
+        print("### ERROR ###")
+        print("You can't get the position of something that you already know the position of!")
         print("Please try again:")
         askToGetpos()
         return False
