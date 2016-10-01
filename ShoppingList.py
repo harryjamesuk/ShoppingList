@@ -154,7 +154,7 @@ def returnIndexFromUserInput(user_input):
             print("The number you have specified is not a valid position in the shopping list. The shopping list",
                   "starts from 1")
             return False
-        elif index > len(shopping_list):
+        elif index >= len(shopping_list):
             print("### ERROR ###")
             print("The number you have specified is not a valid position in the shopping list. The shopping list",
                   "has a length of:", str(len(shopping_list)))
