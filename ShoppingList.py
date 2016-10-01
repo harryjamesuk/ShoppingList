@@ -65,20 +65,31 @@ def askToReplace():
 
 
 def askToGetpos():
-    print("What item are you looking for? Provide item name.")
+    print("What item are you looking for? Provide item name. [PRESS 'z' TO EXIT LOOP]")
     item_to_find = input("> ")
+    if item_to_find.strip().lower() == 'z':
+        print("Ok - exiting loop...")
+        print("\n\n\n")
+        return False
     print("Ok, we'll look for", item_to_find)
     print("Searching...")
     if not getpos(item_to_find):
         askToGetpos()
         return False
+    print("Press any key to continue...")
+    input("> ")
     print("\n\n\n")
     printShoppingList(False)
+    askToGetpos()
 
 
 def askToPrintPos():
-    print("What is the position of the item you are looking for? Provide item position.")
+    print("What is the position of the item you are looking for? Provide item position. [PRESS 'z' TO EXIT LOOP]")
     item_to_print = input("> ")
+    if item_to_print.strip().lower() == 'z':
+        print("Ok - exiting loop...")
+        print("\n\n\n")
+        return False
     if item_to_print[0].isdigit():
         if not printpos(item_to_print):
             askToPrintPos()
@@ -88,8 +99,11 @@ def askToPrintPos():
         print("Please specify the numerical position of the item you are looking for.")
         askToPrintPos()
         return False
+    print("Press any key to continue...")
+    input("> ")
     print("\n\n\n")
     printShoppingList(False)
+    askToPrintPos()
 
 
 def selectMenuOption():
