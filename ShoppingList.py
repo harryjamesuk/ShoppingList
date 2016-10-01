@@ -31,6 +31,15 @@ def askToReplace():
     print()
     printShoppingList(False)
 
+def askToDelete():
+    print("What would you like to delete? Provide item position or name.")
+    item_to_delete = input("> ")
+    print("Ok, we'll delete", item_to_delete)
+    print("Attempting to delete...")
+    deleteItem(item_to_delete)
+    print()
+    printShoppingList(False)
+
 def selectMenuOption():
     print("What would you like to do?")
     # Print menu
@@ -44,7 +53,7 @@ def selectMenuOption():
         askToReplace()
     elif active_menu_option == "delete":
         # Delete
-        print("Coming soon.")
+        askToDelete()
     elif active_menu_option == "getpos":
         # Getpos
         print("Coming soon.")
@@ -100,10 +109,18 @@ def replaceItem(item, replacement):
             shopping_list[i] = replacement
 
 
-# def deleteItem(item):
-#     global shopping_list
-#     if item[0].isdigit():
-#         item = int(item[0])
+def deleteItem(item):
+    global shopping_list
+    index = returnIndexFromUserInput(item)
+    if isinstance(index, bool):
+        # We've hit an error!
+        print("Please try again:")
+        askToDelete()
+    elif isinstance(index, int):
+        del shopping_list[index]
+    elif isinstance(index, list):
+        for i in index:
+            del shopping_list[i]
 
 # Startup
 name = input("What is your name? ")
