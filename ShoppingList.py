@@ -25,7 +25,7 @@ def askToAdd():
     print("What would you like to add? Provide item name.")
     item_to_add = input("> ")
     addItem(item_to_add)
-    print("Ateempting to add item...")
+    print("Attempting to add item...")
     print()
     printShoppingList(False)
 
