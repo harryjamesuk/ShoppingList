@@ -55,7 +55,6 @@ def askToReplace():
     item_to_replace_with = input("> ")
     print("Attempting to replace...")
     if not replaceItem(item_to_replace, item_to_replace_with):
-        askToReplace()
         return False
     print("- Successfully replaced \"" + item_to_replace + "\" with \"" + item_to_replace_with + "\"! :)")
     print("Press any key to continue...")
@@ -74,7 +73,6 @@ def askToGetpos():
     print("Ok, we'll look for", item_to_find)
     print("Searching...")
     if not getpos(item_to_find):
-        askToGetpos()
         return False
     print("Press any key to continue...")
     input("> ")
@@ -92,7 +90,6 @@ def askToPrintPos():
         return False
     if item_to_print[0].isdigit():
         if not printpos(item_to_print):
-            askToPrintPos()
             return False
     else:
         print("### ERROR ###")
@@ -173,6 +170,7 @@ def returnIndexFromUserInput(user_input):
             #print("No indexes found for specified selection.")
             #Let's be user friendly.
             print("Sorry! We couldn't find: " + user_input + " in you shopping list :'(")
+            return False
         return indexes
 
 
@@ -210,6 +208,18 @@ def deleteItem(item):
 # TODO: Handle where user provides a number as a replacement.
 def replaceItem(item, replacement):
     global shopping_list
+    replacementContainsDigit = False
+    for character in replacement:
+        if character.isdigit():
+            replacementContainsDigit = True
+
+    if replacementContainsDigit:
+        # Error - Replacement contains digits.
+        print("### ERROR ###")
+        print("Your replacement must be text, not a number.")
+        print("Try again:")
+        return False
+
     index = returnIndexFromUserInput(item)
     if isinstance(index, bool):
         # We've hit an error!
