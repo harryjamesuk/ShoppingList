@@ -24,10 +24,16 @@ def printShoppingList(show_positions):
 def askToAdd():
     print("What would you like to add? Provide item name.")
     item_to_add = input("> ")
-    addItem(item_to_add)
     print("Attempting to add item...")
-    print()
+    if not addItem(item_to_add):
+        askToAdd()
+        return False
+    print("- Successfully added \"" + item_to_add + "\" to your Shopping List! :)")
+    print("Press any key to continue...")
+    input("> ")
+    print("\n\n\n")
     printShoppingList(False)
+
 
 def askToDelete():
     print("What would you like to delete? Provide item position or name.")
@@ -37,6 +43,7 @@ def askToDelete():
     deleteItem(item_to_delete)
     print()
     printShoppingList(False)
+
 
 def askToReplace():
     print("What would you like to replace? Provide item position or name.")
@@ -49,6 +56,7 @@ def askToReplace():
     print()
     printShoppingList(False)
 
+
 def askToGetpos():
     print("What item are you looking for? Provide item name.")
     item_to_find = input("> ")
@@ -56,7 +64,8 @@ def askToGetpos():
     print("Searching...")
     getpos(item_to_find)
     print()
-    printShoppingList(True)
+    printShoppingList(False)
+
 
 def askToPrintPos():
     print("What is the position of the item you are looking for? Provide item position.")
@@ -70,6 +79,7 @@ def askToPrintPos():
     print()
     printShoppingList(False)
 
+
 def selectMenuOption():
     print("What would you like to do?")
     # Print menu
@@ -80,12 +90,15 @@ def selectMenuOption():
 
     if active_menu_option == "add":
         # Add
+        printShoppingList(False)
         askToAdd()
     elif active_menu_option == "delete":
         # Delete
+        printShoppingList(True)
         askToDelete()
     elif active_menu_option == "replace":
         # Replace
+        printShoppingList(True)
         askToReplace()
     elif active_menu_option == "getpos":
         # Getpos
@@ -96,7 +109,7 @@ def selectMenuOption():
     else:
         # Unknown - Ask again
         print("Unknown menu option selected:", active_menu_option + ".", "Please try again: \n")
-        selectMenuOption()
+    selectMenuOption()
 
 
 def returnIndexFromUserInput(user_input):
@@ -135,12 +148,13 @@ def returnIndexFromUserInput(user_input):
 
 def addItem(item):
     global shopping_list
-    if isinstance(item, str):
-        shopping_list.append(item)
-    else:
+    if any(char.isdigit() for char in item):
         print("### ERROR ###")
         print("Invalid usage: Please specify the name of the item you want to add.")
-        askToAdd()
+        return False
+    elif isinstance(item, str):
+        shopping_list.append(item)
+        return True
 
 
 def deleteItem(item):
