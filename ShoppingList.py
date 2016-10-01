@@ -20,6 +20,17 @@ def printShoppingList(show_positions):
         print(', '.join(shopping_list) + ".")
 
 
+def askToReplace():
+    print("What would you like to replace? Provide item position or name.")
+    item_to_replace = input("> ")
+    print("Ok, we'll replace", item_to_replace + ". What should we replace it with?")
+    print("Provide item name.")
+    item_to_replace_with = input("> ")
+    print("Attempting to replace...")
+    replaceItem(item_to_replace, item_to_replace_with)
+    print()
+    printShoppingList(False)
+
 def selectMenuOption():
     print("What would you like to do?")
     # Print menu
@@ -30,15 +41,7 @@ def selectMenuOption():
 
     if active_menu_option == "replace":
         # Replace
-        print("What would you like to replace? Provide item position or name.")
-        item_to_replace = input("> ")
-        print("Ok, we'll replace", item_to_replace + ". What should we replace it with?")
-        print("Provide item name.")
-        item_to_replace_with = input("> ")
-        print("Attempting to replace...")
-        replaceItem(item_to_replace, item_to_replace_with)
-        print("Replaced!")
-        printShoppingList(False)
+        askToReplace()
     elif active_menu_option == "delete":
         # Delete
         print("Coming soon.")
@@ -54,44 +57,53 @@ def selectMenuOption():
         selectMenuOption()
 
 
-# Have not tested
 def returnIndexFromUserInput(user_input):
     user_input = user_input.strip()
-    if user_input[0].isDigit():
+    if user_input[0].isdigit():
         index = int(user_input[0])-1 # Convert to int, remove additional characters, and remove 1 to get index.
         if index < 0:
             print("### ERROR ###")
-            print("The number you have specified is not a valid position in the shopping list. The shopping list"
+            print("The number you have specified is not a valid position in the shopping list. The shopping list",
                   "starts from 1")
+            return False
         elif index > len(shopping_list):
             print("### ERROR ###")
-            print("The number you have specified is not a valid position in the shopping list. The shopping list"
+            print("The number you have specified is not a valid position in the shopping list. The shopping list",
                   "has a length of:", str(len(shopping_list)))
+            return False
         else:
             return index
     else:
         # String index
         indexes = []
-        currentIndex = 0
+        current_index = 0
         for item in shopping_list:
             if item == user_input:
-                indexes.append(currentIndex)
-            currentIndex+=1
+                indexes.append(current_index)
+            current_index+=1
+        if len(indexes) == 0:
+            print("No indexes found for specified selection.")
+        return indexes
 
 
 def replaceItem(item, replacement):
     global shopping_list
-    if item[0].isdigit():
-        item = int(item[0])-1 # Convert to int, remove additional characters, and remove 1 to get index.
-        shopping_list[item] = replacement
-    else:
-        shopping_list = [shopping_list_item.replace(item, replacement) for shopping_list_item in shopping_list]
+    index = returnIndexFromUserInput(item)
+    if isinstance(index, bool):
+        # We've hit an error!
+        print("Please try again:")
+        askToReplace()
+    elif isinstance(index, int):
+        shopping_list[index] = replacement
+    elif isinstance(index, list):
+        for i in index:
+            shopping_list[i] = replacement
 
 
-def deleteItem(item):
-    global shopping_list
-    if item[0].isdigit():
-        item = int(item[0])
+# def deleteItem(item):
+#     global shopping_list
+#     if item[0].isdigit():
+#         item = int(item[0])
 
 # Startup
 name = input("What is your name? ")
