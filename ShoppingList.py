@@ -1,8 +1,8 @@
 shopping_list = ["Kraves", "Nutella", "Chocolate", "Pancakes", "Ice-cream", "Sugar", "Bread", "Pan au chocolat",
                 "Teabags", "Milk"]
-# TODO: Add add functionality
-menu = [["Replace", "Replaces the item(s) at specified integer or value"],
+menu = [["Add", "Appends an item to the end of the shopping list"],
         ["Delete", "Deletes the item(s) at specified integer or value"],
+        ["Replace", "Replaces the item(s) at specified integer or value"],
         ["Getpos", "Gets the item positions with specified value"],
         ["Printpos", "Prints the item at specified integer"]]
 
@@ -21,14 +21,11 @@ def printShoppingList(show_positions):
         print(', '.join(shopping_list) + ".")
 
 
-def askToReplace():
-    print("What would you like to replace? Provide item position or name.")
-    item_to_replace = input("> ")
-    print("Ok, we'll replace", item_to_replace + ". What should we replace it with?")
-    print("Provide item name.")
-    item_to_replace_with = input("> ")
-    print("Attempting to replace...")
-    replaceItem(item_to_replace, item_to_replace_with)
+def askToAdd():
+    print("What would you like to add? Provide item name.")
+    item_to_add = input("> ")
+    addItem(item_to_add)
+    print("Ateempting to add item...")
     print()
     printShoppingList(False)
 
@@ -41,8 +38,19 @@ def askToDelete():
     print()
     printShoppingList(False)
 
+def askToReplace():
+    print("What would you like to replace? Provide item position or name.")
+    item_to_replace = input("> ")
+    print("Ok, we'll replace", item_to_replace + ". What should we replace it with?")
+    print("Provide item name.")
+    item_to_replace_with = input("> ")
+    print("Attempting to replace...")
+    replaceItem(item_to_replace, item_to_replace_with)
+    print()
+    printShoppingList(False)
+
 def askToGetpos():
-    print("What item are you looking for?")
+    print("What item are you looking for? Provide item name.")
     item_to_find = input("> ")
     print("Ok, we'll look for", item_to_find)
     print("Searching...")
@@ -51,7 +59,7 @@ def askToGetpos():
     printShoppingList(True)
 
 def askToPrintPos():
-    print("What is the position of the item you are looking for?")
+    print("What is the position of the item you are looking for? Provide item position.")
     item_to_print = input("> ")
     if item_to_print[0].isdigit():
         printpos(item_to_print)
@@ -70,12 +78,15 @@ def selectMenuOption():
 
     active_menu_option = input("> ").lower().strip()
 
-    if active_menu_option == "replace":
-        # Replace
-        askToReplace()
+    if active_menu_option == "add":
+        # Add
+        askToAdd()
     elif active_menu_option == "delete":
         # Delete
         askToDelete()
+    elif active_menu_option == "replace":
+        # Replace
+        askToReplace()
     elif active_menu_option == "getpos":
         # Getpos
         askToGetpos()
@@ -122,18 +133,14 @@ def returnIndexFromUserInput(user_input):
         return indexes
 
 
-def replaceItem(item, replacement):
+def addItem(item):
     global shopping_list
-    index = returnIndexFromUserInput(item)
-    if isinstance(index, bool):
-        # We've hit an error!
-        print("Please try again:")
-        askToReplace()
-    elif isinstance(index, int):
-        shopping_list[index] = replacement
-    elif isinstance(index, list):
-        for i in index:
-            shopping_list[i] = replacement
+    if isinstance(item, str):
+        shopping_list.append(item)
+    else:
+        print("### ERROR ###")
+        print("Invalid usage: Please specify the name of the item you want to add.")
+        askToAdd()
 
 
 def deleteItem(item):
@@ -148,6 +155,20 @@ def deleteItem(item):
     elif isinstance(index, list):
         for i in index:
             del shopping_list[i]
+
+
+def replaceItem(item, replacement):
+    global shopping_list
+    index = returnIndexFromUserInput(item)
+    if isinstance(index, bool):
+        # We've hit an error!
+        print("Please try again:")
+        askToReplace()
+    elif isinstance(index, int):
+        shopping_list[index] = replacement
+    elif isinstance(index, list):
+        for i in index:
+            shopping_list[i] = replacement
 
 
 def getpos(item):
