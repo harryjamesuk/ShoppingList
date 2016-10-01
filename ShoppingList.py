@@ -205,7 +205,6 @@ def deleteItem(item):
     return False  # No if's reached
 
 
-# TODO: Handle where user provides a number as a replacement.
 def replaceItem(item, replacement):
     global shopping_list
     replacementContainsDigit = False
