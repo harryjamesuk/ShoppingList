@@ -28,7 +28,7 @@ def askToAdd():
     if not addItem(item_to_add):
         return False
     print("- Successfully added \"" + item_to_add + "\" to your Shopping List! :)")
-    print("Press any key to continue...")
+    print("Press ENTER to continue...")
     input("> ")
     print("\n\n\n")
     printShoppingList(False)
@@ -41,7 +41,7 @@ def askToDelete():
     if not deleteItem(item_to_delete):
         return False
     print("- Successfully deleted \"" + item_to_delete + "\" from your Shopping List! :)")
-    print("Press any key to continue...")
+    print("Press ENTER to continue...")
     input("> ")
     print("\n\n\n")
     printShoppingList(False)
@@ -57,7 +57,7 @@ def askToReplace():
     if not replaceItem(item_to_replace, item_to_replace_with):
         return False
     print("- Successfully replaced \"" + item_to_replace + "\" with \"" + item_to_replace_with + "\"! :)")
-    print("Press any key to continue...")
+    print("Press ENTER to continue...")
     input("> ")
     print("\n\n\n")
     printShoppingList(False)
@@ -74,7 +74,7 @@ def askToGetpos():
     print("Searching...")
     if not getpos(item_to_find):
         return False
-    print("Press any key to continue...")
+    print("Press ENTER to continue...")
     input("> ")
     print("\n\n\n")
     printShoppingList(False)
@@ -96,7 +96,7 @@ def askToPrintPos():
         print("Please specify the numerical position of the item you are looking for.")
         askToPrintPos()
         return False
-    print("Press any key to continue...")
+    print("Press ENTER to continue...")
     input("> ")
     print("\n\n\n")
     printShoppingList(False)
