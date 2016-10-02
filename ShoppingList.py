@@ -169,7 +169,7 @@ def returnIndexFromUserInput(user_input):
         if len(indexes) == 0:
             #print("No indexes found for specified selection.")
             #Let's be user friendly.
-            print("Sorry! We couldn't find: " + user_input + " in you shopping list :'(")
+            print("Sorry! We couldn't find: " + user_input + " in your shopping list :'(")
             return False
         return indexes
 
