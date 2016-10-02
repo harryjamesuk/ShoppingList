@@ -23,7 +23,7 @@ def printShoppingList(show_positions):
 
 def askToAdd():
     print("What would you like to add? Provide item name.")
-    item_to_add = input("> ")
+    item_to_add = input("> ").strip()
     print("Attempting to add item...")
     if not addItem(item_to_add):
         return False
@@ -36,7 +36,7 @@ def askToAdd():
 
 def askToDelete():
     print("What would you like to delete? Provide item position or name.")
-    item_to_delete = input("> ")
+    item_to_delete = input("> ").strip()
     print("Attempting to delete...")
     if not deleteItem(item_to_delete):
         return False
@@ -52,7 +52,7 @@ def askToReplace():
     item_to_replace = input("> ")
     print("Ok, we'll replace", item_to_replace + ". What should we replace it with?")
     print("Provide item name.")
-    item_to_replace_with = input("> ")
+    item_to_replace_with = input("> ").strip()
     print("Attempting to replace...")
     if not replaceItem(item_to_replace, item_to_replace_with):
         return False
@@ -65,8 +65,8 @@ def askToReplace():
 
 def askToGetpos():
     print("What item are you looking for? Provide item name. [PRESS 'z' TO EXIT LOOP]")
-    item_to_find = input("> ")
-    if item_to_find.strip().lower() == 'z':
+    item_to_find = input("> ").strip()
+    if item_to_find.lower() == 'z':
         print("Ok - exiting loop...")
         print("\n\n\n")
         return False
@@ -83,8 +83,8 @@ def askToGetpos():
 
 def askToPrintPos():
     print("What is the position of the item you are looking for? Provide item position. [PRESS 'z' TO EXIT LOOP]")
-    item_to_print = input("> ")
-    if item_to_print.strip().lower() == 'z':
+    item_to_print = input("> ").strip()
+    if item_to_print.lower() == 'z':
         print("Ok - exiting loop...")
         print("\n\n\n")
         return False
