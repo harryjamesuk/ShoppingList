@@ -4,7 +4,8 @@ menu = [["Add", "Appends an item to the end of the shopping list"],
         ["Delete", "Deletes the item(s) at specified integer or value"],
         ["Replace", "Replaces the item(s) at specified integer or value"],
         ["Getpos", "Gets the item positions with specified value"],
-        ["Printpos", "Prints the item at specified integer"]]
+        ["Printpos", "Prints the item at specified integer"],
+        ["Exit", "Terminates the program"]]
 
 
 # Defs
@@ -129,6 +130,9 @@ def selectMenuOption():
     elif active_menu_option == "printpos":
         # Printpos
         askToPrintPos()
+    elif active_menu_option == "exit" or active_menu_option == "z" or active_menu_option == "quit":
+        # Exit
+        quit()
     else:
         # Unknown - Ask again
         print("Unknown menu option selected:", active_menu_option + ".", "Please try again: \n")
