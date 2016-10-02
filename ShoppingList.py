@@ -116,7 +116,7 @@ def selectMenuOption():
         # Add
         printShoppingList(False)
         askToAdd()
-    elif active_menu_option == "delete":
+    elif active_menu_option == "delete" or active_menu_option == "del":
         # Delete
         printShoppingList(True)
         askToDelete()
